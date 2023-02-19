@@ -56,8 +56,12 @@
 			<artifactId>json</artifactId>
 			<version>20220924</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.14</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -74,5 +78,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
