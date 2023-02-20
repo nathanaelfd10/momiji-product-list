@@ -20,15 +20,6 @@ public class TokopediaProduct extends Product {
 	public TokopediaProduct(String hashUrl, String title, int price, int priceDiscount, int soldCount,
 			Category category) {
 		super(hashUrl, title, price, priceDiscount, soldCount, category);
-		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * @param hashUrl
-	 * @param title
-	 * @param price
-	 * @param priceDiscount
-	 * @param soldCount
-	 */
 
 }
