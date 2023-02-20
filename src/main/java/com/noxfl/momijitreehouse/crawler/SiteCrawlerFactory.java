@@ -1,9 +1,7 @@
 /**
  * 
  */
-package com.noxfl.momijitreehouse.crawler.connection;
-
-import com.noxfl.momijitreehouse.crawler.SiteCrawler;
+package com.noxfl.momijitreehouse.crawler;
 
 /**
  * @author Fernando Nathanael
