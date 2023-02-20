@@ -17,6 +17,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
 
@@ -24,6 +25,7 @@ import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
  * @author Fernando Nathanael
  *
  */
+@Component
 public class ApiFetcherImpl implements ApiFetcher {
 
 	public JSONObject fetchPost(String body, HashMap<String, String> headers, String targetUrl) throws IOException {

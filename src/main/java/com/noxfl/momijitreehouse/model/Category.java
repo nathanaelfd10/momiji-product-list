@@ -21,6 +21,6 @@ public class Category {
 
 	private String id;
 	private String siteUrl;
-	private List<String> categoryTrees;
+	private List<String> categoryBreadcrumb;
 
 }

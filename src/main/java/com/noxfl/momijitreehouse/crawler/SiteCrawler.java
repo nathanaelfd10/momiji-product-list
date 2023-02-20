@@ -6,14 +6,13 @@ package com.noxfl.momijitreehouse.crawler;
 import java.util.List;
 
 import com.noxfl.momijitreehouse.model.Category;
-import com.noxfl.momijitreehouse.model.Product;
 import com.noxfl.momijitreehouse.model.Site;
 
 /**
  * @author Fernando Nathanael
  *
  */
-public interface SiteCrawler {
+public interface SiteCrawler<ResultObj> {
 
 	/**
 	 * 
@@ -22,7 +21,7 @@ public interface SiteCrawler {
 	 * @param pageUrl
 	 * @return
 	 */
-	public List<Product> fetchProducts(String pageUrl);
+	public List<ResultObj> fetchProducts(String pageUrl);
 
 	/**
 	 * 
@@ -33,7 +32,7 @@ public interface SiteCrawler {
 	 * @param maxPage
 	 * @return
 	 */
-	public List<Product> fetchProducts(Site site, Category category, int maxPage);
+	public List<ResultObj> fetchProducts(Site site, Category category, int maxPage);
 
 	/**
 	 * 
@@ -46,6 +45,6 @@ public interface SiteCrawler {
 	 * @param queueName
 	 * @return
 	 */
-	public List<Product> fetchProducts(Site site, Category category, int maxPage, String queueName);
+	public List<ResultObj> fetchProducts(Site site, Category category, int maxPage, String queueName);
 
 }

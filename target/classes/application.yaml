@@ -2,3 +2,7 @@ queue:
  name:
   read: "treehouse"
   write: "leaf-rake"
+crawler:
+ politeness:
+  timeout: 
+   tokopedia: 1000
