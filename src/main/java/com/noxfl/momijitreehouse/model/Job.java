@@ -10,7 +10,8 @@ package com.noxfl.momijitreehouse.model;
 public class Job {
 
 	private String name;
-	private String crawlConfigurationName;
+	private Site site;
+	private Category category;
 	private String dateCreated;
 
 }

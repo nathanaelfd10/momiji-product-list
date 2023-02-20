@@ -3,6 +3,7 @@
  */
 package com.noxfl.momijitreehouse.amqp;
 
+import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
@@ -27,6 +28,9 @@ public class QueueReceiver {
 
 	private void receive(String in) {
 		System.out.println("Job received: " + in);
+
+		JSONObject message = new JSONObject(in);
+
 		siteCrawlerFactory.handleUrl(in);
 	}
 
