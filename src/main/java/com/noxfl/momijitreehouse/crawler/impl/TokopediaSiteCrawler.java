@@ -25,7 +25,7 @@ import com.noxfl.momijitreehouse.util.StringUtils;
  * @author Fernando Nathanael
  *
  */
-public class TokopediaSiteCrawler implements SiteCrawler<TokopediaProduct> {
+public abstract class TokopediaSiteCrawler implements SiteCrawler<TokopediaProduct> {
 
 	// Default 1000ms
 	@Value("${crawler.politeness.timeout.tokopedia}")
@@ -137,15 +137,8 @@ public class TokopediaSiteCrawler implements SiteCrawler<TokopediaProduct> {
 	}
 
 	@Override
-	public List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage);
 
 	@Override
-	public List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage, String queueName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	public abstract List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage, String queueName);
 }

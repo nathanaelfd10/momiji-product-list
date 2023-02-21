@@ -14,11 +14,11 @@ import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
  */
 public class SiteCrawlerFactoryImpl implements SiteCrawlerFactory {
 
-	private TokopediaSiteCrawler tokopediaSiteCrawler;
+	private TokopediaCategorySiteCrawler tokopediaCategorySiteCrawler;
 
 	@Autowired
-	public void setTokopediaSiteCrawler(TokopediaSiteCrawler tokopediaSiteCrawler) {
-		this.tokopediaSiteCrawler = tokopediaSiteCrawler;
+	public void setTokopediaSiteCrawler(TokopediaCategorySiteCrawler tokopediaCategorySiteCrawler) {
+		this.tokopediaCategorySiteCrawler = tokopediaCategorySiteCrawler;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class SiteCrawlerFactoryImpl implements SiteCrawlerFactory {
 		switch (siteCrawlerName.toLowerCase()) {
 
 		case "tokopedia":
-			return tokopediaSiteCrawler;
+			return tokopediaCategorySiteCrawler;
 		default:
 			throw new IllegalArgumentException("No site crawler for: " + siteCrawlerName);
 
