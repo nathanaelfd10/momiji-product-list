@@ -32,7 +32,7 @@ public interface SiteCrawler<ResultObj> {
 	 * @param maxPage
 	 * @return
 	 */
-	public List<ResultObj> fetchProducts(Site site, Category category, int maxPage);
+	public List<ResultObj> fetchProducts(PageType pageType, Category category, int maxPage);
 
 	/**
 	 * 
@@ -45,6 +45,6 @@ public interface SiteCrawler<ResultObj> {
 	 * @param queueName
 	 * @return
 	 */
-	public List<ResultObj> fetchProducts(Site site, Category category, int maxPage, String queueName);
+	public List<ResultObj> fetchProducts(PageType pageType, Category category, int maxPage, String queueName);
 
 }

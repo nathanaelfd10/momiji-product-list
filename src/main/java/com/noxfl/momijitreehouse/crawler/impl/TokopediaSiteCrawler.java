@@ -136,9 +136,4 @@ public abstract class TokopediaSiteCrawler implements SiteCrawler<TokopediaProdu
 
 	}
 
-	@Override
-	public abstract List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage);
-
-	@Override
-	public abstract List<TokopediaProduct> fetchProducts(Site site, Category category, int maxPage, String queueName);
 }

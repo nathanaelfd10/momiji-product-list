@@ -55,10 +55,4 @@ public class ApiFetcherImpl implements ApiFetcher {
 
 	}
 
-	@Override
-	public JSONObject fetchGet(HashMap<String, String> headers, String targetUrl) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

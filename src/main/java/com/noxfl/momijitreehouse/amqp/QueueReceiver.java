@@ -6,6 +6,7 @@ package com.noxfl.momijitreehouse.amqp;
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
+import com.noxfl.momijitreehouse.crawler.PageType;
 import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
 
 /**
@@ -31,7 +32,7 @@ public class QueueReceiver {
 
 		JSONObject message = new JSONObject(in);
 
-		siteCrawlerFactory.handleUrl(in);
+		siteCrawlerFactory.getSiteCrawler(null);
 	}
 
 }

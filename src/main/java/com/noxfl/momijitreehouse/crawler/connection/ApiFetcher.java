@@ -15,18 +15,6 @@ import org.json.JSONObject;
 public interface ApiFetcher {
 
 	/**
-	 * 
-	 * Send a GET request to an end point, then returns its response in the form of
-	 * JSONObject.
-	 * 
-	 * @param headers
-	 * @param targetUrl
-	 * @return
-	 * @throws IOException
-	 */
-	public JSONObject fetchGet(HashMap<String, String> headers, String targetUrl) throws IOException;
-
-	/**
 	 * Send a POST request to an end point, then returns its response in the form of
 	 * JSONObject.
 	 * 
