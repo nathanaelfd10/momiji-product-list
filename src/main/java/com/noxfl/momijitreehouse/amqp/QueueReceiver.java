@@ -3,10 +3,12 @@
  */
 package com.noxfl.momijitreehouse.amqp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
-import com.noxfl.momijitreehouse.crawler.PageType;
 import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
 
 /**

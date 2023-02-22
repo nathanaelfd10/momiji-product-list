@@ -52,7 +52,7 @@ public class StringUtils {
      * Generates a string of random letters
      * 
      * @param length
-     * @return a stringn of random letters
+     * @return a string of random letters
      */
     public static String generateRandomLetters(int length) {
         
