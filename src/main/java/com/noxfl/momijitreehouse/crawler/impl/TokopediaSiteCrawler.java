@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -64,7 +65,8 @@ public abstract class TokopediaSiteCrawler implements SiteCrawler<TokopediaProdu
 	 */
 	public String buildCategoryAsParam(Category category) {
 		List<String> categoryTrees = category.getCategoryBreadcrumb();
-		List<String> categoriesAsParams = categoryTrees.stream().map(cat -> StringUtils.slugify(cat)).toList();
+		List<String> categoriesAsParams = categoryTrees.stream().map(cat -> StringUtils.slugify(cat))
+				.collect(Collectors.toList());
 		String categoriesAsParam = String.join("_", categoriesAsParams);
 
 		return categoriesAsParam;
