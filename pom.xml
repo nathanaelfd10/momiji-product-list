@@ -8,9 +8,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.noxfl</groupId>
-	<artifactId>momiji-treehouse</artifactId>
+	<artifactId>momiji-tree-house</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>momiji-treehouse</name>
+	<name>momiji-tree-house</name>
 	<description>Entry service for Momiji Web Crawler</description>
 	<properties>
 		<java.version>19</java.version>

@@ -18,6 +18,7 @@ public class HashUtils {
 		String output;
 
 		try {
+
 			MessageDigest md = MessageDigest.getInstance("SHA-1");
 
 			byte[] messageDigest = md.digest(input.getBytes());

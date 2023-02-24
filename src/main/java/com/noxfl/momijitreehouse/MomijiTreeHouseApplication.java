@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MomijiTreehouseApplication {
+public class MomijiTreeHouseApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MomijiTreehouseApplication.class, args);
+		SpringApplication.run(MomijiTreeHouseApplication.class, args);
 	}
 
 }
