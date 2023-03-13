@@ -42,7 +42,7 @@ public class MessageReceiver {
 
 		Job job = momijiMessage.getJob();
 
-		siteCrawlerFactory.getSiteCrawler(job.getPageType()).fetchProducts(job.getTargetUrl(), 1, 100);
+		siteCrawlerFactory.getSiteCrawler(job.getPageType()).fetchProducts(job, 1, 100);
 	}
 
 }
