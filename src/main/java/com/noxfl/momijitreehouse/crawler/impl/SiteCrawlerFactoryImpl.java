@@ -3,6 +3,7 @@
  */
 package com.noxfl.momijitreehouse.crawler.impl;
 
+import com.noxfl.momijitreehouse.crawler.tokopedia.category.TokopediaCategorySiteCrawler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.noxfl.momijitreehouse.crawler.PageType;
@@ -26,12 +27,8 @@ public class SiteCrawlerFactoryImpl implements SiteCrawlerFactory {
 	public SiteCrawler getSiteCrawler(PageType pageType) {
 
 		switch (pageType) {
-
-		case TOKOPEDIA_CATEGORY:
-			return tokopediaCategorySiteCrawler;
-		default:
-			throw new IllegalArgumentException("No site crawler for PageType: " + pageType.toString());
-
+			case TOKOPEDIA_CATEGORY -> { return tokopediaCategorySiteCrawler; }
+			default -> throw new IllegalArgumentException("No site crawler for PageType: " + pageType.toString());
 		}
 
 	}

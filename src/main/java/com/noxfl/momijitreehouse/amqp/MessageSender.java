@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Fernando Nathanael
  *
  */
-public class QueueSender {
+public class MessageSender {
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;

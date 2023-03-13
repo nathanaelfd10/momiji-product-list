@@ -20,7 +20,7 @@ import lombok.Setter;
 public class Category {
 
 	private String id;
-	private String siteUrl;
+	private String url;
 	private List<String> categoryBreadcrumb;
 
 }

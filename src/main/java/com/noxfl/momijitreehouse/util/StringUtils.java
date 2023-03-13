@@ -3,7 +3,10 @@
  */
 package com.noxfl.momijitreehouse.util;
 
+import org.apache.commons.text.StringSubstitutor;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -87,5 +90,16 @@ public class StringUtils {
         
         return output;
     }
+
+	/**
+	 * Substitutes params in String
+	 * @param in
+	 * @return
+	 */
+	public static String fillString(String in, HashMap<String, String> params) {
+		StringSubstitutor sub = new StringSubstitutor(params);
+
+		return sub.replace(in);
+	}
 
 }
