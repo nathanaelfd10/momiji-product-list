@@ -9,7 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
 import com.noxfl.momijitreehouse.model.Job;
 import com.noxfl.momijitreehouse.model.MomijiMessage;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Fernando Nathanael
@@ -22,27 +25,29 @@ public class MessageReceiver {
 
 	private SiteCrawlerFactory siteCrawlerFactory;
 
+	@Autowired
 	public void setSiteCrawlerFactory(SiteCrawlerFactory siteCrawlerFactory) {
 		this.siteCrawlerFactory = siteCrawlerFactory;
 	}
 
-	@RabbitListener(queues = INPUT_QUEUE_NAME)
-	public void receiver(String in) throws InterruptedException, JsonProcessingException {
-		receive(in);
+	private Queue queue;
+
+	@Autowired
+	public void setQueue(Queue queue) {
+		this.queue = queue;
 	}
 
-	private void receive(String message) throws JsonProcessingException {
-		System.out.println("Job received: " + message);
+	@RabbitHandler
+	@RabbitListener(queues = INPUT_QUEUE_NAME)
+	public void receiver(String message) throws InterruptedException, JsonProcessingException {
+//		System.out.println("Job received: " + message);
 
 		ObjectMapper objectMapper = new ObjectMapper()
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-
 		MomijiMessage momijiMessage = objectMapper.readValue(message, MomijiMessage.class);
 
-		Job job = momijiMessage.getJob();
-
-		siteCrawlerFactory.getSiteCrawler(job.getPageType()).fetchProducts(job, 1, 100);
+		siteCrawlerFactory.getSiteCrawler(momijiMessage.getJob().getPageType()).fetchProducts(momijiMessage, 1, 100);
 	}
 
 }

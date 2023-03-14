@@ -7,6 +7,4 @@ import java.util.List;
 
 public abstract class GenericSiteCrawler<T> implements SiteCrawler<T>{
 
-
-
 }
