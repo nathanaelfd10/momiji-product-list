@@ -5,10 +5,9 @@ package com.noxfl.momijitreehouse.util;
 
 import org.apache.commons.text.StringSubstitutor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.text.Normalizer;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author Fernando Nathanael
@@ -38,6 +37,14 @@ public class StringUtils {
 		String[] defaultSplitter = { " ", "&", "," };
 		String defaultSeparator = "-";
 		return slugify(string, defaultSeparator, defaultSplitter);
+	}
+
+	private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
+	private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
+	private static final Pattern EDGESDHASHES = Pattern.compile("(^-|-$)");
+
+	public static String toSlug(String input, String delimiter) {
+		return input.toLowerCase().replaceAll("[^a-z0-9-]", delimiter);
 	}
 	
 	/**

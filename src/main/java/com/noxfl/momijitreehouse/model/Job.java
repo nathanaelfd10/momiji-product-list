@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * @author Fernando Nathanael
  *
@@ -28,5 +30,7 @@ public class Job {
 	private int maxPage;
 	private String splitPath;
 	private boolean scrapeDetail;
+	private List<ContentParsingGuide> contentParsingGuides;
+	private List<Content> contents;
 
 }

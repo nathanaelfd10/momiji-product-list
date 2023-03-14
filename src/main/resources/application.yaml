@@ -1,3 +1,9 @@
+spring:
+ rabbitmq:
+  host: localhost
+  username: rmq_admin
+  password: rmq_admin
+  port: 5672
 queue:
  name:
   read: "treehouse"
