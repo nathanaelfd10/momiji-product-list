@@ -24,6 +24,6 @@ public interface SiteCrawler<ResultObj> {
 	 * @param maxPage
 	 * @return
 	 */
-	public List<ResultObj> fetchProducts(MomijiMessage momijiMessage, int minPage, int maxPage);
+	public List<ResultObj> fetchProducts(MomijiMessage momijiMessage);
 
 }

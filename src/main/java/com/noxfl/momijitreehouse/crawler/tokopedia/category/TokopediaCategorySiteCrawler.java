@@ -59,7 +59,7 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
                 .toList();
     }
     @Override
-    public List<TokopediaProduct> fetchProducts(MomijiMessage momijiMessage, int minPage, int maxPage) {
+    public List<TokopediaProduct> fetchProducts(MomijiMessage momijiMessage) {
 
         Job job = momijiMessage.getJob();
 
@@ -75,6 +75,9 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
         Category category = job.getCategory();
 
         String formattedBreadcrumb = buildCategoryBreadcrumbAsUrlParam(category);
+
+        int minPage = job.getMinPage();
+        int maxPage = job.getMaxPage();
 
         for (int i = minPage; i < maxPage; i++) {
 
