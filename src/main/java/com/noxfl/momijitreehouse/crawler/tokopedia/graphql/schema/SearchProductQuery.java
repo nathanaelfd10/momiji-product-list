@@ -1,5 +1,9 @@
 package com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema;
 
+/**
+ * @author Fernando Nathanael
+ *
+ */
 public class SearchProductQuery {
 
     public static final String OPERATION_NAME = "SearchProductQuery";

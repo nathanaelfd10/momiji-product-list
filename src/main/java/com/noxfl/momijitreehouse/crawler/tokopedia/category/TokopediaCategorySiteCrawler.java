@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fernando Nathanael
+ *
+ */
 @Component
 public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
 

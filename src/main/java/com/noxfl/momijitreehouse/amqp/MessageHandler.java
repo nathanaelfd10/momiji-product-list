@@ -9,6 +9,10 @@ import com.noxfl.momijitreehouse.model.MomijiMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Fernando Nathanael
+ *
+ */
 @Component
 public class MessageHandler {
 
@@ -30,7 +34,7 @@ public class MessageHandler {
 
         System.out.println("Received job: " + momijiMessage.getJob().getName());
 
-        siteCrawlerFactory.getSiteCrawler(momijiMessage.getJob().getPageType()).fetchProducts(momijiMessage, job.getMinPage(), job.getMaxPage());
+        siteCrawlerFactory.getSiteCrawler(momijiMessage.getJob().getPageType()).fetchProducts(momijiMessage);
     }
 
 

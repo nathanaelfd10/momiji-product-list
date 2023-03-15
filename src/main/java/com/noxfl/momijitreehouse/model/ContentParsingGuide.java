@@ -6,6 +6,10 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * @author Fernando Nathanael
+ *
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

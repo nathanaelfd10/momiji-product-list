@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/**
+ * @author Fernando Nathanael
+ *
+ */
 public class TreeHouseRunner implements CommandLineRunner {
 
     private ConfigurableApplicationContext context;
