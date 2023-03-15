@@ -1,14 +1,6 @@
 package com.noxfl.momijitreehouse.crawler.tokopedia.category;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.github.slugify.Slugify;
-import com.google.gson.JsonObject;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.noxfl.momijitreehouse.amqp.MessageSender;
@@ -18,11 +10,17 @@ import com.noxfl.momijitreehouse.crawler.tokopedia.TokopediaSiteCrawler;
 import com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema.SearchProductQuery;
 import com.noxfl.momijitreehouse.model.*;
 import com.noxfl.momijitreehouse.util.StringUtils;
-import net.minidev.json.JSONArray;
 import net.minidev.json.JSONStyle;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
@@ -51,12 +49,15 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
     private List<Content> splitJsonContent(String contentName, String jsonString, String splitPath) {
         final ContentType contentType = ContentType.JSON;
 
-        return Arrays.asList(JsonPath.using(Configuration.defaultConfiguration()).parse(jsonString).read(splitPath, net.minidev.json.JSONObject[].class))
-                .stream()
-                .map(json -> new Content(contentName, contentType, new JSONObject(json).toString()))
+        net.minidev.json.JSONObject[] contents =
+                JsonPath.using(Configuration.defaultConfiguration())
+                        .parse(jsonString)
+                        .read(splitPath, net.minidev.json.JSONObject[].class);
+
+        return Arrays.stream(contents)
+                .map(json -> new Content(contentName, contentType, json.toJSONString(JSONStyle.NO_COMPRESS)))
                 .toList();
     }
-
     @Override
     public List<TokopediaProduct> fetchProducts(MomijiMessage momijiMessage, int minPage, int maxPage) {
 
@@ -109,9 +110,7 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
 
                     momijiMessage.getJob().setContents(contents);
 
-                    JSONObject output = new JSONObject(momijiMessage);
-
-                    messageSender.send(output.toString());
+                    messageSender.send(new JSONObject(momijiMessage).toString());
 
                 }
 
