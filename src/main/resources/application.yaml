@@ -6,8 +6,8 @@ spring:
   port: 5672
 queue:
  name:
-  read: "treehouse"
-  write: "leaf-rake"
+  read: "leaf-rake"
+  write: "wood-chipper"
 crawler:
  politeness:
   timeout: 

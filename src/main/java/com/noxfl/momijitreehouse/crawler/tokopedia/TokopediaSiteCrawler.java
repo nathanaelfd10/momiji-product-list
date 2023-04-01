@@ -46,5 +46,5 @@ public abstract class TokopediaSiteCrawler implements SiteCrawler<TokopediaProdu
 
 		return uri.toString();
 	}
-	
+
 }

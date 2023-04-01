@@ -27,7 +27,7 @@ public class TreeHouseRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        int sleep = 50000;
+        int sleep = 900000;
         String message = String.format("Running for %s", sleep);
         System.out.println(message);
         Thread.sleep(sleep);

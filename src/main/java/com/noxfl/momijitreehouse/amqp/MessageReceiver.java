@@ -19,20 +19,6 @@ public class MessageReceiver {
 
 	public static final String INPUT_QUEUE_NAME = "tree-house";
 
-	private SiteCrawlerFactory siteCrawlerFactory;
-
-	@Autowired
-	public void setSiteCrawlerFactory(SiteCrawlerFactory siteCrawlerFactory) {
-		this.siteCrawlerFactory = siteCrawlerFactory;
-	}
-
-	private Queue queue;
-
-	@Autowired
-	public void setQueue(Queue queue) {
-		this.queue = queue;
-	}
-
 	private MessageHandler messageHandler;
 
 	@Autowired
