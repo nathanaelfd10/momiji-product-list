@@ -1,37 +1,12 @@
 package com.noxfl.momijitreehouse.crawler.site.bukalapak;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawler;
+import com.noxfl.momijitreehouse.crawler.site.GenericSiteCrawler;
 
-public abstract class BukalapakSiteCrawler implements SiteCrawler {
-
-    private int paginationStart;
-
-    private int page;
-
-    private String pageUrl;
+public abstract class BukalapakSiteCrawler extends GenericSiteCrawler {
 
     public BukalapakSiteCrawler() {
-        this.paginationStart = 1;
-        this.page = this.paginationStart;
+        this.setPaginationStart(1);
     }
-
-    protected void nextPage() {
-        this.page++;
-    }
-
-    protected void previousPage() {
-        this.page--;
-    }
-
-    protected int getCurrentPage() {
-        return page;
-    }
-
-
-    protected void setPaginationStart(int paginationStart){
-        this.paginationStart = paginationStart;
-    }
-
-
 
 }

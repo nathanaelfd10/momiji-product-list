@@ -53,7 +53,7 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
     }
 
     //TODO: Reusable function, move somewhere else
-    private List<String> splitProductCards(String contentName, String jsonString, String splitPath) {
+    private List<String> splitProductCards(String jsonString, String splitPath) {
         final ContentType contentType = ContentType.JSON;
 
         net.minidev.json.JSONObject[] contents =
@@ -66,72 +66,62 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
                 .toList();
     }
 
+    private JSONObject buildPayload(Job job) throws IOException, URISyntaxException {
+        JSONObject gqlQueryParams = new JSONObject();
+        gqlQueryParams.put("params", buildVariablesParam(job.getCategory().getUrl(), this.getCurrentPage()));
+//            gqlQueryParams.put("adParams", buildVariablesAdParam(i));
+
+        JSONObject payload = new JSONObject();
+        payload.put("operationName", SearchProductQuery.OPERATION_NAME);
+        payload.put("query", SearchProductQuery.QUERY);
+        payload.put("variables", gqlQueryParams);
+
+        return payload;
+    }
+
     @Override
     public HashMap<String, Object> fetchProducts(MomijiMessage momijiMessage) throws IOException, URISyntaxException {
 
         Job job = momijiMessage.getJob();
 
-        Category category = job.getCategory();
+        JSONObject payload = buildPayload(job);
 
-        int minPage = job.getMinPage();
-        int maxPage = job.getMaxPage();
+        // Crawl delay
+        try {
+            Thread.sleep(GLOBAL_POLITENESS_TIMEOUT_TOKOPEDIA);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-        for (int i = minPage; i <= maxPage; i++) {
+        String response = apiFetcher.fetchPost(payload.toString(), headers, TOKOPEDIA_API_ENDPOINT).toString();
 
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        List<String> productCards = splitProductCards(response, "$.data.CategoryProducts.data[*]");
 
-            JSONObject gqlQueryParams = new JSONObject();
-            gqlQueryParams.put("params", buildVariablesParam(job.getCategory().getUrl(), i));
-//            gqlQueryParams.put("adParams", buildVariablesAdParam(i));
+        for(String card : productCards) {
 
-            JSONObject payload = new JSONObject();
-            payload.put("operationName", SearchProductQuery.OPERATION_NAME);
-            payload.put("query", SearchProductQuery.QUERY);
-            payload.put("variables", gqlQueryParams);
+            List<Content> contents = new ArrayList<>();
 
-            try {
-                String response = apiFetcher.fetchPost(payload.toString(), headers, TOKOPEDIA_API_ENDPOINT).toString();
-                String contentName = "ProductContent";
-                ContentType contentType = ContentType.JSON;
+            String url = JsonPath.using(Configuration.defaultConfiguration())
+                    .parse(card)
+                    .read("$.url");
 
-                List<String> productCards = splitProductCards(contentName, response, "$.data.CategoryProducts.data[*]");
+            url = UriUtils.clearParameter(url).toString();
 
-                for(String card : productCards) {
+            momijiMessage.getJob().getContent().setUrl(url);
+            momijiMessage.getJob().getContent().setProduct(card);
 
-                    List<Content> contents = new ArrayList<>();
-
-                    String url = JsonPath.using(Configuration.defaultConfiguration())
-                            .parse(card)
-                            .read("$.url");
-
-                    url = UriUtils.clearParameter(url).toString();
-
-                    momijiMessage.getJob().getContent().setUrl(url);
-                    momijiMessage.getJob().getContent().setProduct(card);
-
-                    messageSender.send(new JSONObject(momijiMessage).toString());
-
-                }
-
-            } catch (IOException | URISyntaxException e){
-                throw new RuntimeException(e);
-            }
+            messageSender.send(new JSONObject(momijiMessage).toString());
 
         }
 
+
+
+        this.nextPage();
+
+        if(this.getCurrentPage() <= job.getMaxPage())
+            fetchProducts(momijiMessage);
+
         return null;
-    }
-
-    private String fillStringWithPageNumber(String str, int pageNumber) {
-        HashMap<String, String> params = new HashMap<>();
-
-        params.put("page", String.valueOf(pageNumber));
-
-        return StringUtils.fillString(str, params);
     }
 
     /**
