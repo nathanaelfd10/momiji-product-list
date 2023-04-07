@@ -47,9 +47,7 @@ public class BukalapakCategorySiteCrawler extends BukalapakSiteCrawler {
             momijiMessage.getJob().getContent().setUrl(productUrl);
             momijiMessage.getJob().getContent().setProduct(element.toString());
 
-            System.out.println(new JSONObject(momijiMessage).toString());
-
-            messageSender.send(new JSONObject(momijiMessage).toString());
+            messageSender.send(momijiMessage);
         }
 
         this.nextPage();

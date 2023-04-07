@@ -28,7 +28,7 @@ public class MessageReceiver {
 	public void setMessageHandler(MessageHandler messageHandler) {
 		this.messageHandler = messageHandler;
 	}
-
+	
 	@RabbitHandler
 	@RabbitListener(queues = INPUT_QUEUE_NAME)
 	public void receive(String message) throws IOException, URISyntaxException {

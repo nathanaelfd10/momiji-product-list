@@ -110,7 +110,7 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
             momijiMessage.getJob().getContent().setUrl(url);
             momijiMessage.getJob().getContent().setProduct(card);
 
-            messageSender.send(new JSONObject(momijiMessage).toString());
+            messageSender.send(momijiMessage);
 
         }
 
