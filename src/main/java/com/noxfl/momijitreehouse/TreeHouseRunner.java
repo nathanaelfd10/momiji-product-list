@@ -1,7 +1,6 @@
 package com.noxfl.momijitreehouse;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawlerFactory;
-import com.noxfl.momijitreehouse.crawler.tokopedia.category.TokopediaCategorySiteCrawler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;

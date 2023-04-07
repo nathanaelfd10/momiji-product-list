@@ -1,4 +1,4 @@
-package com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema;
+package com.noxfl.momijitreehouse.crawler.site.tokopedia.graphql.schema;
 
 /**
  * @author Fernando Nathanael

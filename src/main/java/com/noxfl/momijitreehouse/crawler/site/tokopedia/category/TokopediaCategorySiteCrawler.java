@@ -1,12 +1,12 @@
-package com.noxfl.momijitreehouse.crawler.tokopedia.category;
+package com.noxfl.momijitreehouse.crawler.site.tokopedia.category;
 
 import com.github.slugify.Slugify;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.noxfl.momijitreehouse.amqp.MessageSender;
 import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
-import com.noxfl.momijitreehouse.crawler.tokopedia.TokopediaSiteCrawler;
-import com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema.SearchProductQuery;
+import com.noxfl.momijitreehouse.crawler.site.tokopedia.TokopediaSiteCrawler;
+import com.noxfl.momijitreehouse.crawler.site.tokopedia.graphql.schema.SearchProductQuery;
 import com.noxfl.momijitreehouse.model.schema.message.*;
 import com.noxfl.momijitreehouse.util.StringUtils;
 import com.noxfl.momijitreehouse.util.UriUtils;

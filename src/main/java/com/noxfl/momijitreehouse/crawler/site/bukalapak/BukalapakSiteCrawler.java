@@ -1,13 +1,6 @@
-package com.noxfl.momijitreehouse.crawler.bukalapak;
+package com.noxfl.momijitreehouse.crawler.site.bukalapak;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawler;
-import com.noxfl.momijitreehouse.crawler.bukalapak.category.BukalapakCategorySiteCrawler;
-import com.noxfl.momijitreehouse.model.schema.message.MomijiMessage;
-import org.w3c.dom.Document;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.HashMap;
 
 public abstract class BukalapakSiteCrawler implements SiteCrawler {
 

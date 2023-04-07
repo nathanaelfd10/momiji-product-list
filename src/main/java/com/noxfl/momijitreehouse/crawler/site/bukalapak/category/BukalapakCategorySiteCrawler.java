@@ -1,7 +1,7 @@
-package com.noxfl.momijitreehouse.crawler.bukalapak.category;
+package com.noxfl.momijitreehouse.crawler.site.bukalapak.category;
 
 import com.noxfl.momijitreehouse.amqp.MessageSender;
-import com.noxfl.momijitreehouse.crawler.bukalapak.BukalapakSiteCrawler;
+import com.noxfl.momijitreehouse.crawler.site.bukalapak.BukalapakSiteCrawler;
 import com.noxfl.momijitreehouse.model.schema.message.MomijiMessage;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;

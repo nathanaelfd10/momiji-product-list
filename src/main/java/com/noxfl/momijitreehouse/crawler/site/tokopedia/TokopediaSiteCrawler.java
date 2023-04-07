@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.noxfl.momijitreehouse.crawler.tokopedia;
+package com.noxfl.momijitreehouse.crawler.site.tokopedia;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawler;
 import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;

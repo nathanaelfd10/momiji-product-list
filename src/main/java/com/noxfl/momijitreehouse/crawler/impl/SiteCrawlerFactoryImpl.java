@@ -4,8 +4,8 @@
 package com.noxfl.momijitreehouse.crawler.impl;
 
 import com.noxfl.momijitreehouse.crawler.SiteContentType;
-import com.noxfl.momijitreehouse.crawler.bukalapak.category.BukalapakCategorySiteCrawler;
-import com.noxfl.momijitreehouse.crawler.tokopedia.category.TokopediaCategorySiteCrawler;
+import com.noxfl.momijitreehouse.crawler.site.bukalapak.category.BukalapakCategorySiteCrawler;
+import com.noxfl.momijitreehouse.crawler.site.tokopedia.category.TokopediaCategorySiteCrawler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.noxfl.momijitreehouse.crawler.SiteCrawler;
