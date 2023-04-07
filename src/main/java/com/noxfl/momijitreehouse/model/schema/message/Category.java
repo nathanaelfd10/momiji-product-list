@@ -1,24 +1,28 @@
 /**
  * 
  */
-package com.noxfl.momijitreehouse.model;
+package com.noxfl.momijitreehouse.model.schema.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * @author Fernando Nathanael
  *
  */
-@NoArgsConstructor
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class Site {
+public class Category {
 
 	private String id;
-	private String baseUrl;
+	private String url;
+	private List<String> categoryBreadcrumb;
 
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.noxfl.momijitreehouse.crawler;
+package com.noxfl.momijitreehouse.model.schema.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  */
 public enum PageType {
-	@JsonProperty("TOKOPEDIA_CATEGORY")
-	TOKOPEDIA_CATEGORY
+	@JsonProperty("CATEGORY")
+	CATEGORY,
+	@JsonProperty("DETAIL")
+	DETAIL
 }
+

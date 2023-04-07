@@ -1,14 +1,11 @@
-package com.noxfl.momijitreehouse.model;
+package com.noxfl.momijitreehouse.model.schema.message;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * @author Fernando Nathanael
- *
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

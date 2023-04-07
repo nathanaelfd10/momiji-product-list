@@ -1,6 +1,8 @@
-package com.noxfl.momijitreehouse.model;
+/**
+ * 
+ */
+package com.noxfl.momijitreehouse.model.schema.message;
 
-import com.noxfl.momijitreehouse.crawler.ContentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +16,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Content {
+public class Site {
 
-    private String name;
-    private ContentType contentType;
-    private String content;
+	private String id;
+	private String name;
+	private String baseUrl;
 
 }

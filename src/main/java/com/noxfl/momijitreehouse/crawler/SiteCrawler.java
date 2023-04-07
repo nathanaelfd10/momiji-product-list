@@ -3,18 +3,17 @@
  */
 package com.noxfl.momijitreehouse.crawler;
 
-import java.util.List;
+import com.noxfl.momijitreehouse.model.schema.message.MomijiMessage;
 
-import com.noxfl.momijitreehouse.model.Category;
-import com.noxfl.momijitreehouse.model.Job;
-import com.noxfl.momijitreehouse.model.MomijiMessage;
-import com.noxfl.momijitreehouse.model.Site;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 
 /**
  * @author Fernando Nathanael
  *
  */
-public interface SiteCrawler<ResultObj> {
+public interface SiteCrawler {
 
 	/**
 	 * Crawls products by category. Crawls until end of category if maxPage = 0.
@@ -24,6 +23,6 @@ public interface SiteCrawler<ResultObj> {
 	 * @param maxPage
 	 * @return
 	 */
-	public List<ResultObj> fetchProducts(MomijiMessage momijiMessage);
+	public HashMap<String, Object> fetchProducts(MomijiMessage momijiMessage) throws IOException, URISyntaxException;
 
 }

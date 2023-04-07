@@ -1,9 +1,7 @@
 /**
  * 
  */
-package com.noxfl.momijitreehouse.model;
-
-import java.util.List;
+package com.noxfl.momijitreehouse.model.schema.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,15 +12,13 @@ import lombok.Setter;
  * @author Fernando Nathanael
  *
  */
-
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class Category {
-
-	private String id;
-	private String url;
-	private List<String> categoryBreadcrumb;
+public class Field {
+	
+	private String name;
+	private String path;
 
 }

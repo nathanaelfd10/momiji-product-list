@@ -1,5 +1,21 @@
 package com.noxfl.momijitreehouse.crawler.tokopedia.category;
 
+import com.github.slugify.Slugify;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+import com.noxfl.momijitreehouse.amqp.MessageSender;
+import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
+import com.noxfl.momijitreehouse.crawler.tokopedia.TokopediaSiteCrawler;
+import com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema.SearchProductQuery;
+import com.noxfl.momijitreehouse.model.schema.message.*;
+import com.noxfl.momijitreehouse.util.StringUtils;
+import com.noxfl.momijitreehouse.util.UriUtils;
+import net.minidev.json.JSONStyle;
+import org.apache.http.client.utils.URIBuilder;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -8,34 +24,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.github.slugify.Slugify;
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
-import com.noxfl.momijitreehouse.amqp.MessageSender;
-import com.noxfl.momijitreehouse.crawler.ContentType;
-import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
-import com.noxfl.momijitreehouse.crawler.tokopedia.TokopediaSiteCrawler;
-import com.noxfl.momijitreehouse.crawler.tokopedia.graphql.schema.SearchProductQuery;
-import com.noxfl.momijitreehouse.model.Category;
-import com.noxfl.momijitreehouse.model.Content;
-import com.noxfl.momijitreehouse.model.Job;
-import com.noxfl.momijitreehouse.model.MomijiMessage;
-import com.noxfl.momijitreehouse.model.TokopediaProduct;
-import com.noxfl.momijitreehouse.util.StringUtils;
-import com.noxfl.momijitreehouse.util.UriUtils;
-
-import net.minidev.json.JSONStyle;
-
 /**
  * @author Fernando Nathanael
  *
  */
 @Component
 public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
+
+    final HashMap<String, String> headers = new HashMap<>();
 
     private MessageSender messageSender;
 
@@ -46,11 +42,18 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
 
     public TokopediaCategorySiteCrawler(ApiFetcher apiFetcher) {
         super(apiFetcher);
-        // TODO Auto-generated constructor stub
+
+        headers.put("User-Agent", "python-requests/2.28.1");
+        headers.put("Content-Type", "application/json");
+        headers.put("Accept", "*/*");
+        headers.put("Accept-Encoding", "gzip, deflate");
+        headers.put("Accept-Language", "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7");
+        headers.put("Connection", "keep-alive");
+        headers.put("Origin", "https://www.tokopedia.com");
     }
 
     //TODO: Reusable function, move somewhere else
-    private List<Content> splitProductCards(String contentName, String jsonString, String splitPath) {
+    private List<String> splitProductCards(String contentName, String jsonString, String splitPath) {
         final ContentType contentType = ContentType.JSON;
 
         net.minidev.json.JSONObject[] contents =
@@ -59,27 +62,16 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
                         .read(splitPath, net.minidev.json.JSONObject[].class);
 
         return Arrays.stream(contents)
-                .map(json -> new Content(contentName, contentType, json.toJSONString(JSONStyle.MAX_COMPRESS)))
+                .map(json -> json.toJSONString(JSONStyle.MAX_COMPRESS))
                 .toList();
     }
 
     @Override
-    public List<TokopediaProduct> fetchProducts(MomijiMessage momijiMessage) {
+    public HashMap<String, Object> fetchProducts(MomijiMessage momijiMessage) throws IOException, URISyntaxException {
 
         Job job = momijiMessage.getJob();
 
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("User-Agent", "python-requests/2.28.1");
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "*/*");
-        headers.put("Accept-Encoding", "gzip, deflate");
-        headers.put("Accept-Language", "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7");
-        headers.put("Connection", "keep-alive");
-        headers.put("Origin", "https://www.tokopedia.com");
-
         Category category = job.getCategory();
-
-        String formattedBreadcrumb = buildCategoryIdentifier(category);
 
         int minPage = job.getMinPage();
         int maxPage = job.getMaxPage();
@@ -93,7 +85,7 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
             }
 
             JSONObject gqlQueryParams = new JSONObject();
-            gqlQueryParams.put("params", buildVariablesParam(category, i));
+            gqlQueryParams.put("params", buildVariablesParam(job.getCategory().getUrl(), i));
 //            gqlQueryParams.put("adParams", buildVariablesAdParam(i));
 
             JSONObject payload = new JSONObject();
@@ -106,23 +98,20 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
                 String contentName = "ProductContent";
                 ContentType contentType = ContentType.JSON;
 
-                List<Content> productCards = splitProductCards(contentName, response, "$.data.CategoryProducts.data[*]");
+                List<String> productCards = splitProductCards(contentName, response, "$.data.CategoryProducts.data[*]");
 
-                for(var product : productCards) {
+                for(String card : productCards) {
 
                     List<Content> contents = new ArrayList<>();
 
-                    String url = UriUtils.clearParameter(
-                            // Parse URL from JSON content
-                            JsonPath.using(Configuration.defaultConfiguration())
-                                    .parse(product.getContent())
-                                    .read("$.url")
-                    );
+                    String url = JsonPath.using(Configuration.defaultConfiguration())
+                            .parse(card)
+                            .read("$.url");
 
-                    contents.add(new Content("product_url", contentType, url));
-                    contents.add(new Content(contentName, contentType, product.getContent()));
+                    url = UriUtils.clearParameter(url).toString();
 
-                    momijiMessage.getJob().setContents(contents);
+                    momijiMessage.getJob().getContent().setUrl(url);
+                    momijiMessage.getJob().getContent().setProduct(card);
 
                     messageSender.send(new JSONObject(momijiMessage).toString());
 
@@ -152,18 +141,19 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
      * @param page
      * @return GraphQL Query
      */
-    private String buildVariablesParam(Category category, int page) {
+    private String buildVariablesParam(String url, int page) throws IOException, URISyntaxException {
         int rows = 60;
         int start = 61;
 
-        String breadcrumbAsUrlParam = buildCategoryIdentifier(category);
+        String categoryIdentifier = buildCategoryIdentifier(url);
+        int categoryId = getCategoryId(categoryIdentifier);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("page", String.valueOf(page));
         params.put("rows", String.valueOf(rows));
         params.put("source", "directory");
-        params.put("sc", "784");
-        params.put("identifier", breadcrumbAsUrlParam);
+        params.put("sc", String.valueOf(categoryId));
+        params.put("identifier", categoryIdentifier);
         params.put("start", String.valueOf(start));
         params.put("st", "product");
         params.put("device", "desktop");
@@ -174,6 +164,52 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
         String output = buildParams(params);
 
         return output.startsWith("?") ? output.substring(1, output.length()) : output;
+    }
+
+    private int getCategoryId(String categoryIdentifier) throws IOException {
+
+        JSONObject variables = new JSONObject();
+        variables.put("identifier", categoryIdentifier);
+        variables.put("intermediary", true);
+        variables.put("safeSearch", true);
+
+        JSONObject payload = new JSONObject();
+        payload.put("operationName", "CategoryDetailQuery");
+        payload.put("variables", variables);
+        payload.put("query", """
+                query CategoryDetailQuery($identifier: String!, $intermediary: Boolean!, $safeSearch: Boolean!) {
+                 CategoryDetailQuery: CategoryDetailQueryV3(identifier: $identifier, intermediary: $intermediary, safeSearch: $safeSearch) {
+                 header {
+                 code
+                 serverProcessTime
+                 message
+                 __typename
+                 }
+                 data {
+                 id
+                 name
+                 useDiscoPage
+                 discoIdentifier
+                 url
+                 redirectionURL
+                 child {
+                 id
+                 name
+                 url
+                 thumbnailImage
+                 isAdult
+                 applinks
+                 __typename
+                 }
+                 __typename
+                 }
+                 __typename
+                 }
+                }
+                """);
+        String response = apiFetcher.fetchPost(payload.toString(), headers, TOKOPEDIA_API_ENDPOINT).toString();
+
+        return JsonPath.using(Configuration.defaultConfiguration()).parse(response).read("$.data.CategoryDetailQuery.data.id", Integer.class);
     }
 
     private String buildVariablesAdParam(int page) {
@@ -195,14 +231,16 @@ public class TokopediaCategorySiteCrawler extends TokopediaSiteCrawler {
         return buildParams(params);
     }
 
-    /**
-     * Builds category breadcrumb in the form of String that can be used in
-     * GraphQLquery params
-     *
-     * @param category
-     * @return
-     */
-    public String buildCategoryIdentifier(Category category) {
+    private String buildCategoryIdentifier(String url) throws URISyntaxException {
+        List<String> paths = new URIBuilder(url).clearParameters().getPathSegments();
+        if(paths.get(0).equalsIgnoreCase("p")) {
+            paths.remove(0);
+        }
+
+        return String.join("_", paths);
+    }
+
+    private String buildCategoryIdentifier(Category category) {
 
         Slugify slug = Slugify.builder().lowerCase(true).build();
 

@@ -1,15 +1,9 @@
-package com.noxfl.momijitreehouse.model;
+package com.noxfl.momijitreehouse.model.schema.message;
 
-import com.noxfl.momijitreehouse.model.Field;
-import com.noxfl.momijitreehouse.crawler.ContentType;
 import lombok.*;
 
 import java.util.List;
 
-/**
- * @author Fernando Nathanael
- *
- */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

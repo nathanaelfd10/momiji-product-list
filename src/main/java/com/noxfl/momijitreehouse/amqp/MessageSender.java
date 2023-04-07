@@ -19,9 +19,12 @@ public class MessageSender {
         this.rabbitTemplate = rabbitTemplate;
     }
 
+    private int messageCount = 0;
+
     public void send(String message) {
         rabbitTemplate.convertAndSend("leaf-rake", message);
-        System.out.println(" [x] Sent message");
+        messageCount++;
+        System.out.printf(" [%s] Sent message%n", messageCount);
     }
 
 }

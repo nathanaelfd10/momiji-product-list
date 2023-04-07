@@ -3,22 +3,19 @@
  */
 package com.noxfl.momijitreehouse.crawler.tokopedia;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import com.noxfl.momijitreehouse.model.*;
+import com.noxfl.momijitreehouse.crawler.SiteCrawler;
+import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.noxfl.momijitreehouse.crawler.SiteCrawler;
-import com.noxfl.momijitreehouse.crawler.connection.ApiFetcher;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * @author Fernando Nathanael
  *
  */
-public abstract class TokopediaSiteCrawler implements SiteCrawler<TokopediaProduct>  {
+public abstract class TokopediaSiteCrawler implements SiteCrawler {
 
 	public static final String TOKOPEDIA_API_ENDPOINT = "https://gql.tokopedia.com";
 
