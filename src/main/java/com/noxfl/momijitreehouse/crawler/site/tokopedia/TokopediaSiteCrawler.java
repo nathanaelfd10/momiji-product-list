@@ -27,7 +27,7 @@ public abstract class TokopediaSiteCrawler extends GenericSiteCrawler {
 
 	public TokopediaSiteCrawler(ApiFetcher apiFetcher) {
 		this.apiFetcher = apiFetcher;
-		System.out.printf("GLOBAL_POLITENESS_TIMEOUT_TOKOPEDIA set to: %sms%n", GLOBAL_POLITENESS_TIMEOUT_TOKOPEDIA);
+		this.setPaginationStart(1);
 	}
 
 	/**

@@ -22,13 +22,15 @@ public class MessageReceiver {
 
 	public static final String INPUT_QUEUE_NAME = "tree-house";
 
+	public static final int HEARTBEAT_INTERVAL_MS = 1000;
+
 	private MessageHandler messageHandler;
 
 	@Autowired
 	public void setMessageHandler(MessageHandler messageHandler) {
 		this.messageHandler = messageHandler;
 	}
-	
+
 	@RabbitHandler
 	@RabbitListener(queues = INPUT_QUEUE_NAME)
 	public void receive(String message) throws IOException, URISyntaxException {

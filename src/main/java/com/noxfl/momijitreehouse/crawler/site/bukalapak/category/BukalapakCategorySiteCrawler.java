@@ -24,6 +24,12 @@ public class BukalapakCategorySiteCrawler extends BukalapakSiteCrawler {
         this.messageSender = messageSender;
     }
 
+    private void iterate(MomijiMessage momijiMessage) {
+
+
+
+    }
+
     @Override
     public HashMap<String, Object> fetchProducts(MomijiMessage momijiMessage) throws IOException, URISyntaxException {
 
@@ -37,8 +43,6 @@ public class BukalapakCategorySiteCrawler extends BukalapakSiteCrawler {
 
         Document document = Jsoup.connect(url).get();
         List<Element> elements = document.select(".te-product-card");
-
-        System.out.println(elements.size());
 
         for(var element : elements) {
 

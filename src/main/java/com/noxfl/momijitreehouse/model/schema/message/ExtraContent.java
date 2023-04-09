@@ -9,5 +9,5 @@ import lombok.*;
 @ToString
 public class ExtraContent {
     String name;
-    String content;
+    Object content;
 }

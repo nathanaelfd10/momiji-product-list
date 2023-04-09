@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageSender {
 
-    @Autowired
+    public static final String QUEUE_NAME_OUTPUT_PRODUCT_DETAIL = "leaf-rake";
+    public static final String QUEUE_NAME_OUTPUT_EXTRACT = "wood-chipper";
+
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
@@ -24,16 +26,17 @@ public class MessageSender {
     private int messageCount = 0;
 
     public void send(MomijiMessage momijiMessage) {
+        String queueName = momijiMessage.getJob().isScrapeDetail()
+                ? QUEUE_NAME_OUTPUT_PRODUCT_DETAIL
+                : QUEUE_NAME_OUTPUT_EXTRACT;
 
-        String queueName = momijiMessage.getJob().isScrapeDetail() ? "product" : "extract";
-
-        send(new JSONObject(momijiMessage).toString(), queueName);
+        this.send(new JSONObject(momijiMessage).toString(), queueName);
     }
 
     public void send(String message, String queueName) {
         rabbitTemplate.convertAndSend(queueName, message);
         messageCount++;
-        System.out.printf(" [%s] Sent message%n", messageCount);
+        System.out.printf(" [%s] Sent message to '%s' %n", messageCount, queueName);
     }
 
 }
